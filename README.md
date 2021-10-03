@@ -1,6 +1,6 @@
 # IthoPy
 
-Python3 library to build and parse I2C bus messages for Itho Daalderop devices. Meant for inclusion in your own Python code, not for direct consumption through the CLI.
+Python3 library to build and parse I2C bus messages for Itho devices. Meant for inclusion in your own Python code, not for direct consumption through the CLI.
 
 NOTE: This library can't communicate directly with your device. For that you'll need to use something like [itho-esp](https://github.com/rustyx/itho-esp) to send/receive these messages to a ESP32 using MQTT.
 
