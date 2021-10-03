@@ -1,0 +1,23 @@
+Index,Naam,Tekst_NL,Tooltip_NL,Eenheid_NL,Tekst_GB,Tooltip_GB,Eenheid_GB,Tekst_F,Tooltip_F,Eenheid_F,SubTabel,Visible
+5,"affanactspeed","Afvoer actual","Aktuele toerental afvoer ventilator","tpm","exhaust fan actual","actual rpm exhaust fan","rpm","Aktuele toerental van afvoer ventilator","Aktuele toerental afvoer ventilator","tpm",,0
+4,"affanspeed","Afvoer gevraagd","Gevraagde snelheid afvoer ventilator","tpm","exhaust fan","speed exhaust fan","rpm","Snelheid van de afvoer ventilator","Snelheid afvoer ventilator","%",,0
+7,"aftemp","Temp van afvoer lucht","Temp van afvoer lucht","°C","exhaust temp","temp of the exhaust air","°C","Temp van afvoer lucht","Temp van afvoer lucht","°C",,0
+21,"AirCounter","Luchtfilter teller",,,"Airfilter counter",,,,,,,0
+1,"Balance","Balans","Verhouding tussen aan en afvoer","%","Balance","supply and request ratio","%",,,,,0
+16,"BoilTim","Keteltimer","Ketel timer","min","Boiler timer",,"min","Keteltimer","Ketel timer","min",,0
+12,"bypklep","Bypass stand","Stand van de bypass klep","puls","Bypass position","Position of the bypass valve","pulse","Bypass stand","Stand van de bypass klep","puls",,0
+18,"CurPos","Huidige pos","Huidige positie",,"Current position",,,"Huidige pos","Huidige positie",,,0
+15,"FrostTim","Vorsttimer","Vorst timer","sec","Frost timer",,"sec","Vorsttimer","Vorst timer","sec",,0
+20,"GHEswitch","GHE schakelaar","Ground Heat Exchange",,"GHEswitch","Ground Heat Exchanger",,,,,"L_M_UitAan",0
+0,"ReqFanspeed","Gevraagde snelheid",,"%","Requested fanspeed",,"%",,,,,0
+17,"StartCnt","Vorstblokkade","Uitstellen tot  vorstbeveiliging",,"Frost block",,,"Opstartteller","Opstart teller",,,0
+8,"status","Status :","Status",,"Status","status of the HRU",,"Status :","Status",,"L_M_Status",0
+13,"SumCnt","Zomerteller","Zomerteller",,"Summercounter",,,"Zomerteller","Zomerteller",,,0
+14,"SumDay","Zomerdag","Zomerdag",,"Summerday",,,"Zomerdag","Zomerdag",,"L_M_actief",0
+9,"Tin","Kamertemp","Kamertemp","°C","Room temp",,"°C","Kamertemp","Kamertemp","°C",,0
+3,"toefanactspeed","Toevoer actual","Aktuele toerental aanvoer ventilator","tpm","supply fan actual","actual rpm supply fan","rpm","Aktuele toerental van toevoer ventilator","Aktuele toerental aanvoer ventilator","tpm",,0
+2,"toefanspeed","Toevoer gevraagd","Gevraagd snelheid aanvoer ventilator","tpm","supply fan","speed supply fan","rpm","Snelheid van de toevoer ventilator","Snelheid aanvoer ventilator","%",,0
+6,"toetemp","Temp van toevoer lucht","Temp van toevoer lucht","°C","supply temp","temp of the supply air","°C","Temp van toevoer lucht","Temp van toevoer lucht","°C",,0
+10,"Tout","Buitentemp","Buitentemp","°C","Outdoor temp",,"°C","Buitentemp","Buitentemp","°C",,0
+19,"VKKswitch","VKK schakelaar","Ventilatie Ketel Koppeling",,"VKKswitch","Ventilation Boiler Connection",,,,,"L_M_UitAan",0
+11,"vorstklep","Klepstand","Stand van de vorst klep","puls","Valve position","Position of the frost valve","pulse","Klepstand","Stand van de vorst klep","puls",,0

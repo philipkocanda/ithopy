@@ -1,0 +1,66 @@
+[
+  {
+    "address": "01",
+    "device": "Lucht gordijn"
+  },
+  {
+    "address": "03",
+    "device": "HRU ECO-fan"
+  },
+  {
+    "address": "08",
+    "device": "Laadboiler"
+  },
+  {
+    "address": "0A",
+    "device": "Gas gestookte boost boiler"
+  },
+  {
+    "address": "0B",
+    "device": "DemandFlow"
+  },
+  {
+    "address": "0C",
+    "device": "CO2 relay"
+  },
+  {
+    "address": "0D",
+    "device": "Warmtepomp"
+  },
+  {
+    "address": "0E",
+    "device": "Oplaadboiler enkele wisselaar"
+  },
+  {
+    "address": "0F",
+    "device": "AutoTemp"
+  },
+  {
+    "address": "10",
+    "device": "Oplaadboiler dubbele wisselaar"
+  },
+  {
+    "address": "11",
+    "device": "RF+"
+  },
+  {
+    "address": "14",
+    "device": "CVE"
+  },
+  {
+    "address": "15",
+    "device": "Extended"
+  },
+  {
+    "address": "16",
+    "device": "Extended Plus"
+  },
+  {
+    "address": "1A",
+    "device": "AreaFlow"
+  },
+  {
+    "address": "1B",
+    "device": "CVE-Silent"
+  }
+]
