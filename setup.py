@@ -4,37 +4,21 @@
 
 from setuptools import setup, find_packages
 
-
 with open('README.md') as f:
     readme = f.read()
 
-with open('LICENSE') as f:
-    license = f.read()
-
-setup(
-    name='ithopy',
-    version='0.1.0',
-    description='IthoPy is a library to communicate with I2C Itho devices',
-    long_description=readme,
-    author='Philip Kocanda',
-    author_email='philip@kocanda.nl',
-    url='https://github.com/philipkocanda/ithopy',
-    license=license,
-    packages=find_packages(exclude=('tests', 'docs'))
-)
-
-
-from distutils.core import setup
 setup(
   name = 'ithopy',
   packages = ['ithopy'],
   version = '0.1',
   license='MIT',
   description = 'IthoPy is a library to communicate with I2C Itho devices',   # Give a short description about your library
+  long_description=readme,
+  long_description_content_type='text/markdown',
   author='Philip Kocanda',
   author_email='philip@kocanda.nl',
   url='https://github.com/philipkocanda/ithopy',
-  download_url = 'https://github.com/philipkocanda/ithopy/archive/v_01.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/philipkocanda/ithopy/archive/refs/tags/v0.1.zip',    # I explain this later on
   keywords = ['itho', 'i2c'],
   install_requires=[],
   classifiers=[
