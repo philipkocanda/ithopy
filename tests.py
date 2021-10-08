@@ -12,12 +12,16 @@ class TestHruMessageBuilder(unittest.TestCase):
   #
   # To get the desired fan speed, the value must be multiplied by 1/2 of the balance factor (currently 1.11, so multiply by 1.055)
   def test_set_supply_fan_rpm(self):
+    print("")
+    print(str(self.hru.set_supply_fan_rpm(1100)))
+    print("")
+    print(str(self.hru.set_exhaust_fan_rpm(900)))
+
     self.assertEqual(
       str(self.hru.set_supply_fan_rpm(0)),
       "82 80 A4 10 06 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2D 00 04"
     )
 
-    # 1477 RPM (~1400 corrected for balance) (low):
     self.assertEqual(
       str(self.hru.set_supply_fan_rpm(1477)),
       "82 80 A4 10 06 13 00 00 05 C5 00 00 00 00 00 00 00 00 00 00 00 00 00 2D 00 3A"
