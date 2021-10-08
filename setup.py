@@ -18,7 +18,7 @@ setup(
   author='Philip Kocanda',
   author_email='philip@kocanda.nl',
   url='https://github.com/philipkocanda/ithopy',
-  download_url = 'https://github.com/philipkocanda/ithopy/archive/refs/tags/0.1.zip',
+  download_url = 'https://github.com/philipkocanda/ithopy/archive/refs/tags/v0.1.1.zip',
   keywords = ['itho', 'i2c'],
   install_requires=[],
   classifiers=[
