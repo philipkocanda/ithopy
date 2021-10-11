@@ -8,15 +8,9 @@ class TestHruMessageBuilder(unittest.TestCase):
   def setUp(self) -> None:
     self.hru = HruMessageBuilder(HruDevice.ESP32_ADDR, HruDevice.HRU_ADDR)
 
-  # Supply Fan
+  # Supply Fan Speed
   #
-  # To get the desired fan speed, the value must be multiplied by 1/2 of the balance factor (currently 1.11, so multiply by 1.055)
   def test_set_supply_fan_rpm(self):
-    print("")
-    print(str(self.hru.set_supply_fan_rpm(1100)))
-    print("")
-    print(str(self.hru.set_exhaust_fan_rpm(900)))
-
     self.assertEqual(
       str(self.hru.set_supply_fan_rpm(0)),
       "82 80 A4 10 06 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2D 00 04"
@@ -32,7 +26,7 @@ class TestHruMessageBuilder(unittest.TestCase):
       "82 80 A4 10 06 13 00 00 07 08 00 00 00 00 00 00 00 00 00 00 00 00 00 2D 00 F5"
     )
 
-  # Exhaust Fan
+  # Exhaust Fan Speed
   #
   def test_set_exhaust_fan_rpm(self):
     self.assertEqual(
@@ -58,19 +52,25 @@ class TestHruMessageBuilder(unittest.TestCase):
     )
 
   def test_valve_position(self):
-    # Closed position:
+    # Closed position (default)
+    #
+    # Both intake and exhaust air pass through heat exchanger.
     self.assertEqual(
       str(self.hru.set_valve_position(0)),
       "82 80 A4 10 06 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2F 00 02"
     )
 
-    # Frost position:
+    # Frost position
+    #
+    # Mix in some (or a lot of) indoor air to prevent heat exchanger from freezing up on very cold days.
     self.assertEqual(
       str(self.hru.set_valve_position(-800)),
       "82 80 A4 10 06 13 00 00 FC E0 00 00 00 00 00 00 00 00 00 00 00 00 00 2F 00 26"
     )
 
-    # Bypass position:
+    # Bypass position
+    #
+    # Intake air bypasses heat exchanger, useful on warm summer nights.
     self.assertEqual(
       str(self.hru.set_valve_position(800)),
       "82 80 A4 10 06 13 00 00 03 20 00 00 00 00 00 00 00 00 00 00 00 00 00 2F 00 DF"
