@@ -18,20 +18,20 @@ class Message:
 
     return c
 
-  def encoded_msg_class(self):
-    num = self.msg_class >> 8
-    byte1 = num + 128
-    byte2 = self.msg_class - (num * 256)
-    return [byte1, byte2]
+  def encode_msg_class(self, msg_class):
+    num = msg_class >> 8
+    byte0 = num + 128
+    byte1 = msg_class - (num * 256)
+    return [byte0, byte1]
 
-  # Note: All bytes are stores as ints as long as possible before being returned
+  # Note: All bytes are stored as ints as long as possible before being returned
   def build(self):
     payload = self.payload.build().byteArr
 
     self.intArr = [
       self.dest,
       self.src,
-      *self.encoded_msg_class(),
+      *self.encode_msg_class(self.msg_class),
       self.type,
       len(payload),
       *payload,

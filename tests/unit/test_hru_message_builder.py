@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import unittest
 from ithopy.devices.hru_device import HruDevice
 from ithopy.devices.hru_message_builder import HruMessageBuilder
@@ -85,6 +83,9 @@ class TestHruMessageBuilder(unittest.TestCase):
     self.assertEqual(
       self.hru.set_exhaust_fan_rpm(1200).build().intArr,
       [130, 128, 164, 16, 6, 19, 0, 0, 4, 176, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 46, 0, 79]
+      #                          ^                                                        ^
+      # byte(n)                  6                                                        24
+      #                          [----------------------- payload(19) ----------------------]
     )
 
 if __name__ == '__main__':
