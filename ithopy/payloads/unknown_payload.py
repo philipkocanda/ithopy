@@ -1,4 +1,4 @@
-from ithopy.base_payload import BasePayload
+from .base_payload import BasePayload
 
 class UnknownPayload(BasePayload):
   def __init__(self) -> None:

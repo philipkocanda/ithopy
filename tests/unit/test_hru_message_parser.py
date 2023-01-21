@@ -1,7 +1,6 @@
 import unittest
 import ipdb
-from ithopy.devices.hru_device import HruDevice
-from ithopy.devices.hru_message_parser import HruMessageParser
+from ithopy.devices import HruMessageParser
 from ithopy.exceptions import *
 
 class TestHruMessageParser(unittest.TestCase):

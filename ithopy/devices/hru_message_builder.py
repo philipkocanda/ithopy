@@ -1,5 +1,5 @@
 from ithopy.message import Message
-from ithopy.config_payload import ConfigPayload
+from ithopy.payloads import *
 from ithopy.base_message_builder import BaseMessageBuilder
 from .hru_device import HruDevice
 
@@ -19,8 +19,8 @@ class HruMessageBuilder(BaseMessageBuilder):
     msg           = Message()
     msg.src       = self.src_addr
     msg.dest      = self.dest_addr
-    msg.msg_class = HruDevice.SETTINGS_MSG
-    msg.type      = BaseMessageBuilder.MSG_WRITE
+    msg.msg_class = HruDevice.SETTINGS_MSG # TODO: create message type subclass
+    msg.type      = BaseMessageBuilder.MSG_WRITE # TODO: create message type subclass
     msg.payload   = payload
 
     if msg.payload.setting_id == 7 and msg.payload.payload_value == 1:

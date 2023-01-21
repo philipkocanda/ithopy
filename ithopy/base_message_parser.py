@@ -1,10 +1,6 @@
 from ithopy.message import Message
-from ithopy.base_payload import BasePayload
-from ithopy.config_payload import ConfigPayload
-from ithopy.device_status_payload import DeviceStatusPayload
-from ithopy.status_format_payload import StatusFormatPayload
-from ithopy.unknown_payload import UnknownPayload
-from ithopy.exceptions import *
+from ithopy.payloads import *
+from ithopy.exceptions import IthoPyChecksumError
 
 # Message structure
 

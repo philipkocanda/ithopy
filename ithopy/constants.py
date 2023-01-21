@@ -1,13 +1,26 @@
+from ithopy.payloads import *
+
 class Constants:
   MSG_CLASSES = {
-    9232: 'config', # 2410
-
-    9216: 'status_format', # = [0xA4, 0x00]
-    9217: 'device_status', # = [0xA4, 0x01]
-
-    9219: 'log_flags',
-
-    16432: 'raw_data_response',
+    9232: {
+      # seems to be identical to [0x24, 0x10] (aka "2410")
+      'name': 'config',
+    },
+    9216: {
+      # [0xA4, 0x00]
+      'name': 'status_format',
+      'payload_class': ConfigPayload,
+    },
+    9217: {
+      # [0xA4, 0x01]
+      'name': 'device_status',
+    },
+    9219: {
+      'name': 'log_flags',
+    },
+    16432: {
+      'name': 'raw_data_response',
+    }
   }
 
   MSG_TYPES = {

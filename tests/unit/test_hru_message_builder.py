@@ -1,6 +1,6 @@
 import unittest
-from ithopy.devices.hru_device import HruDevice
-from ithopy.devices.hru_message_builder import HruMessageBuilder
+from ithopy.devices import HruDevice
+from ithopy.devices import HruMessageBuilder
 
 class TestHruMessageBuilder(unittest.TestCase):
   def setUp(self) -> None:
