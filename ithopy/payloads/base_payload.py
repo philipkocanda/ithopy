@@ -1,3 +1,5 @@
+from ithopy.exceptions import IthoPyException
+
 class BasePayload:
   DATA_TYPES = {
     "1_byte": {
@@ -57,13 +59,13 @@ class BasePayload:
   # Or perhaps there is some way of knowing when
   # there are multiple data values sent at once?
   def parse(self, byteArr, payload_type):
-    pass
+    raise IthoPyException('Not implemented')
 
   def build(self):
-    pass
+    raise IthoPyException('Not implemented')
 
   def inspect(self):
-    pass
+    raise IthoPyException('Not implemented')
 
   # bytestring representation of the payload
   def __str__(self):

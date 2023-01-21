@@ -55,7 +55,7 @@ class Message:
     return {
       "dest": self.src,
       "src": self.src,
-      "msg_class": Constants.MSG_CLASSES.get(self.msg_class, f"<unknown: {self.msg_class}>"),
+      "msg_class": Constants.MSG_CLASSES.get(self.msg_class, 0)['name'],
       "msg_type": Constants.MSG_TYPES.get(self.type, f"<unknown: {self.type}>"),
       "payload": self.payload.inspect(),
     }

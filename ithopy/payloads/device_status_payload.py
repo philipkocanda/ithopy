@@ -75,7 +75,7 @@ class DeviceStatusPayload(BasePayload):
   # 20	GHEswitch	GHEswitch
   # 21	AirCounter	Airfilter counter
   def inspect(self):
-    {
+    return {
       # TODO
     }
 

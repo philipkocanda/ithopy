@@ -46,7 +46,7 @@ class StatusFormatPayload(BasePayload):
     return self
 
   def inspect(self):
-    {
+    return {
       # TODO
     }
 

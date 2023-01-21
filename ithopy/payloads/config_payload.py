@@ -52,7 +52,7 @@ class ConfigPayload(BasePayload):
     return self
 
   def inspect(self):
-    {
+    return {
       "value": self.payload_value,
       "setting_id": self.setting_id,
       "data_type": self.data_type,

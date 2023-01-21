@@ -4,7 +4,6 @@ class UnknownPayload(BasePayload):
   def __init__(self) -> None:
     # Create an empty data buffer with room for 19 bytes:
     self.byteArr = [0x0] * 19
-    self.data_type = 0 # not sure what this is, but it needs to be zero
 
     pass
 
