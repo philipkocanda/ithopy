@@ -4,7 +4,7 @@ from ithopy.config_payload import ConfigPayload
 from ithopy.device_status_payload import DeviceStatusPayload
 from ithopy.status_format_payload import StatusFormatPayload
 from ithopy.unknown_payload import UnknownPayload
-from ithopy.exceptions import IthoPyException
+from ithopy.exceptions import *
 
 # Message structure
 
@@ -44,13 +44,13 @@ class BaseMessageParser:
     self.message.payload = self.payload
     self.message.build()
 
-    if self.message.checksum != self.checksum:
-      raise IthoPyException(f"Checksum mismatch! Received: `{self.to_hex(self.checksum)}`, calculated: `{self.to_hex(self.message.checksum)}`")
+    self.validate_checksum()
 
   def decode_msg_class(self, msg_class):
     byte0, byte1 = msg_class
 
     return (byte0 - 128) * 256 + byte1
 
-  def verify_checksum(self):
-    pass
+  def validate_checksum(self):
+    if self.message.checksum != self.checksum:
+      raise IthoPyChecksumError(f"Checksum mismatch! Received: `{self.to_hex(self.checksum)}`, calculated: `{self.to_hex(self.message.checksum)}`")
