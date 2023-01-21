@@ -45,20 +45,6 @@ class BasePayload:
 
         pass
 
-    # Data format (1 byte):
-
-    # | Bit  | Description                        |
-    # | ---- | ---------------------------------- |
-    # | 7    | signed (1) / unsigned (0)          |
-    # | 6..4 | size in bytes (2^n): 0=1, 1=2, 2=4 |
-    # | 3..0 | decimal digits (divider 10^n)      |
-
-    # TODO:
-    # Each message class might need its own payload and parser.
-    # For instance the device status message. See format above.
-    #
-    # Or perhaps there is some way of knowing when
-    # there are multiple data values sent at once?
     def parse(self, byteArr, payload_type):
         raise IthoPyException('Not implemented')
 

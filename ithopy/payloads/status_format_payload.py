@@ -28,6 +28,30 @@ class StatusFormatPayload(BasePayload):
 
         return self.payload_value
 
+    # Data format (1 byte):
+    #
+    # | Bit  | Description                        |
+    # | ---- | ---------------------------------- |
+    # | 7    | signed (1) / unsigned (0)          |
+    # | 6..4 | size in bytes (2^n): 0=1, 1=2, 2=4 |
+    # | 3..0 | decimal digits (divider 10^n)      |
+    #
+    # So for example `0x91` would mean "signed, 2 bytes, 0.1 values".
+    #
+    #   0b10010001 (0x91)
+    #     1        (signed)
+    #     ^001     (001 = 1 -> 2^1=2)
+    #     |   0001 (0001 = 1 -> 10^1=10, so divide by 10 to get 0.1 resolution)
+    #     |      ^
+    #     |      |
+    # bit 7......0
+    def parse_format_byte(self, format_byte):
+        {
+            'divider': 10 ** int((format_byte >> 4) & 0b111),
+            'size_bytes': 2 ** int(format_byte & 0b1111),
+            'signed': (format_byte >> 7) & 0b1,
+        }
+
     def build(self):
         num_bytes = self.payload_type['bytes']
         _bitmask = self.payload_type['bitmask']

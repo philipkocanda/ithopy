@@ -53,3 +53,5 @@ print(msg.build().intArr)
 [n]     payload
 [n+1]   checksum
 ```
+
+Payload is parsed depending on message type.

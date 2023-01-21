@@ -26,7 +26,7 @@ class TestHruMessageParser(unittest.TestCase):
         # | 6..4 | size in bytes (2^n): 0=1, 1=2, 2=4 |
         # | 3..0 | decimal digits (divider 10^n)      |
 
-        # So for example `91` would mean "signed, 2 bytes, 0.1 values".
+        # So for example `0x91` would mean "signed, 2 bytes, 0.1 values".
 
     def test_parsing_device_status_message(self):
         # Query device status:
