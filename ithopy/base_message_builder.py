@@ -17,6 +17,7 @@ class BaseMessageBuilder:
 
   # TODO generic message for all itho i2c devices
   # "82 80 90 E0 04 00 8A"
+  # see device_types.json
   def device_type(self):
     pass
 

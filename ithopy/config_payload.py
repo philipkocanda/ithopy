@@ -1,50 +1,20 @@
-class Payload:
-  DATA_TYPES = {
-    "1_byte": {
-      "bytes": 1,
-      "bitmask": 0,
-      "resolution": 1,
-    },
-    "2_bytes": {
-      "bytes": 2,
-      "bitmask": 16,
-      "resolution": 1,
-    },
-    "4_bytes": {
-      "bytes": 4,
-      "bitmask": 32,
-      "resolution": 1,
-    },
-    "bool": {
-      "bytes": 4,
-      "bitmask": 3,
-      "resolution": 1000,
-    },
-    "4_bits": {
-      "bytes": 1,
-      "bitmask": 4,
-      "resolution": 10000,
-    },
-    "12_bits": {
-      "bytes": 2,
-      "bitmask": 5,
-      "resolution": 100000,
-    },
-    "float": {
-      "bytes": 4,
-      "bitmask": 7,
-      "resolution": 1E+07,
-    },
-  }
+from ithopy.base_payload import BasePayload
+from ithopy.exceptions import IthoPyException
+
+class ConfigPayload(BasePayload):
+  PAYLOAD_SIZE = 19 # bytes
 
   def __init__(self) -> None:
     # Create an empty data buffer with room for 19 bytes:
-    self.byteArr = [0x0] * 19
+    self.byteArr = [0x0] * self.PAYLOAD_SIZE
     self.data_type = 0 # not sure what this is, but it needs to be zero
 
     pass
 
   def parse(self, byteArr, payload_type):
+    if len(byteArr) != self.PAYLOAD_SIZE:
+      raise IthoPyException(f"Failed parsing config message payload: expected length to be {self.PAYLOAD_SIZE} bytes, actual length: {len(byteArr)} bytes")
+
     self.data_type = byteArr[16]
     self.setting_id = byteArr[17] # can be used to look up the correct payload_type, right?
     self.payload_type = payload_type
@@ -80,6 +50,14 @@ class Payload:
       self.byteArr[0] = (value >> 24) & 0xFF
 
     return self
+
+  def inspect(self):
+    {
+      "value": self.payload_value,
+      "setting_id": self.setting_id,
+      "data_type": self.data_type,
+      "type": self.payload_type,
+    }
 
   # bytestring representation of the payload
   def __str__(self):

@@ -1,3 +1,5 @@
+from ithopy.constants import Constants
+
 class Message:
   def __init__(self) -> None:
       self.intArr = []
@@ -37,7 +39,9 @@ class Message:
       *payload,
     ]
 
-    self.intArr.append(self.calc_checksum(self.intArr))
+    self.checksum = self.calc_checksum(self.intArr)
+
+    self.intArr.append(self.checksum)
 
     for i in self.intArr:
       self.byteArr.extend(self.to_hex(i))
@@ -45,6 +49,16 @@ class Message:
     self.byteArr = list(map(self.to_hex, self.intArr))
 
     return self
+
+  # this could be in a separate "serializer" class
+  def inspect(self):
+    return {
+      "dest": self.src,
+      "src": self.src,
+      "msg_class": Constants.MSG_CLASSES.get(self.msg_class, f"<unknown: {self.msg_class}>"),
+      "msg_type": Constants.MSG_TYPES.get(self.type, f"<unknown: {self.type}>"),
+      "payload": self.payload.inspect(),
+    }
 
   # bytestring representation of the message
   def __str__(self):

@@ -1,11 +1,17 @@
 from ithopy.message import Message
-from ithopy.payload import Payload
+from ithopy.config_payload import ConfigPayload
 from ithopy.base_message_builder import BaseMessageBuilder
 from .hru_device import HruDevice
 
 class HruMessageBuilder(BaseMessageBuilder):
+  def status_format(self):
+    pass
+
+  def device_status(self):
+    pass
+
   def write_setting(self, setting_id, payload_value = None, payload_type = None):
-    payload = Payload()
+    payload = ConfigPayload()
     payload.payload_type  = payload_type
     payload.payload_value = payload_value
     payload.setting_id    = setting_id
@@ -17,10 +23,13 @@ class HruMessageBuilder(BaseMessageBuilder):
     msg.type      = BaseMessageBuilder.MSG_WRITE
     msg.payload   = payload
 
+    if msg.payload.setting_id == 7 and msg.payload.payload_value == 1:
+      raise Exception('DANGER: This will permanently disable I2C comms on some CVE devices!')
+
     return msg
 
   def read_setting(self, setting_id):
-    payload = Payload()
+    payload = ConfigPayload()
     payload.setting_id = setting_id
 
     msg           = Message()
@@ -37,7 +46,7 @@ class HruMessageBuilder(BaseMessageBuilder):
       raise Exception('Value out of range')
 
     return self.write_setting(
-      HruDevice.SET_SUPPLY_FAN_RPM, value, Payload.DATA_TYPES['2_bytes']
+      HruDevice.SET_SUPPLY_FAN_RPM, value, ConfigPayload.DATA_TYPES['2_bytes']
     )
 
   def set_exhaust_fan_rpm(self, value):
@@ -45,13 +54,13 @@ class HruMessageBuilder(BaseMessageBuilder):
       raise Exception('Value out of range')
 
     return self.write_setting(
-      HruDevice.SET_EXHAUST_FAN_RPM, value, Payload.DATA_TYPES['2_bytes']
+      HruDevice.SET_EXHAUST_FAN_RPM, value, ConfigPayload.DATA_TYPES['2_bytes']
     )
 
   # value = 0-1
   def set_manual_mode(self, value):
     return self.write_setting(
-      HruDevice.SET_MANUAL_MODE, (1 if value == True else 0), Payload.DATA_TYPES['1_byte']
+      HruDevice.SET_MANUAL_MODE, (1 if value == True else 0), ConfigPayload.DATA_TYPES['1_byte']
     )
 
   # 0=closed, 800=bypass, -800=frost
@@ -60,5 +69,5 @@ class HruMessageBuilder(BaseMessageBuilder):
       raise Exception('Value out of range')
 
     return self.write_setting(
-      HruDevice.SET_VALVE_POSITION, value, Payload.DATA_TYPES['2_bytes']
+      HruDevice.SET_VALVE_POSITION, value, ConfigPayload.DATA_TYPES['2_bytes']
     )
