@@ -20,16 +20,16 @@ class BaseMessageParser:
     def to_hex(self, n):
         return '{0:02X}'.format(n)
 
-    def parse(self, byteArr):
+    def parse(self, byte_list):
         self.message = Message()
 
-        self.dest = byteArr[0]
-        self.src = byteArr[1]
-        self.msg_class = byteArr[2:4]  # needs conversion
-        self.type = byteArr[4]
-        self.payload_length = byteArr[5]
-        self.raw_payload = byteArr[6:len(byteArr) - 1]
-        self.checksum = byteArr[len(byteArr) - 1]
+        self.dest = byte_list[0]
+        self.src = byte_list[1]
+        self.msg_class = byte_list[2:4]  # needs conversion
+        self.type = byte_list[4]
+        self.payload_length = byte_list[5]
+        self.raw_payload = byte_list[6:len(byte_list) - 1]
+        self.checksum = byte_list[len(byte_list) - 1]
 
         self.payload = ConfigPayload()
         # move to Payload class implementation
