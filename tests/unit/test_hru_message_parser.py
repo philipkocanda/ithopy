@@ -62,7 +62,7 @@ class TestHruMessageParser(unittest.TestCase):
             9232
         )
 
-        self.assertEqual(self.parser.message.build().intArr,
+        self.assertEqual(self.parser.message.build().data,
                          [130, 128, 164, 16, 6, 19, 0, 0, 4, 176, 0, 0, 0, 0, 0,
                           0, 0, 0, 0, 0, 0, 0, 0, 46, 0, 79])
 

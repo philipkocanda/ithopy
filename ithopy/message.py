@@ -3,17 +3,16 @@ from ithopy.constants import Constants
 
 class Message:
     def __init__(self) -> None:
-        self.intArr = []
         self.data = []
         pass
 
     def to_hex(self, n):
         return '{0:02X}'.format(n)
 
-    def calc_checksum(self, intArr):
+    def calc_checksum(self, data):
         c = 0
 
-        for i in intArr:
+        for i in data:
             c += i
             if c > 255:
                 c -= 256
@@ -30,10 +29,11 @@ class Message:
         return [byte0, byte1]
 
     # Note: All bytes are stored as ints as long as possible before being returned
+    # err, we don't need to do this! ^
     def build(self):
         payload = self.payload.build().data
 
-        self.intArr = [
+        self.data = [
             self.dest,
             self.src,
             *self.encode_msg_class(self.msg_class),
@@ -42,14 +42,9 @@ class Message:
             *payload,
         ]
 
-        self.checksum = self.calc_checksum(self.intArr)
+        self.checksum = self.calc_checksum(self.data)
 
-        self.intArr.append(self.checksum)
-
-        for i in self.intArr:
-            self.data.extend(self.to_hex(i))
-
-        self.data = list(map(self.to_hex, self.intArr))
+        self.data.append(self.checksum)
 
         return self
 
@@ -63,6 +58,15 @@ class Message:
             "payload": self.payload.inspect(),
         }
 
-    # bytestring representation of the message
+    def bytes_list(self):
+        "Returns list of bytes as strings: ['82', '80', 'A4', '10']"
+        self.build()
+        return list(map(self.to_hex, self.data))
+
     def __str__(self):
-        return " ".join(self.build().data)
+        "Returns bytestring: '82 80 A4 10'"
+        self.build()
+
+        data = list(map(self.to_hex, self.data))
+
+        return " ".join(data)

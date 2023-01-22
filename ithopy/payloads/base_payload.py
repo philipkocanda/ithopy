@@ -52,7 +52,7 @@ class BasePayload:
         raise IthoPyException('Not implemented')
 
     def inspect(self):
-        self.__dict__()
+        return self.__dict__()
 
     def __str__(self):
         'Bytestring representation of the payload'
