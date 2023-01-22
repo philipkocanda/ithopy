@@ -4,7 +4,7 @@ from ithopy.constants import Constants
 class Message:
     def __init__(self) -> None:
         self.intArr = []
-        self.byte_list = []
+        self.data = []
         pass
 
     def to_hex(self, n):
@@ -31,7 +31,7 @@ class Message:
 
     # Note: All bytes are stored as ints as long as possible before being returned
     def build(self):
-        payload = self.payload.build().byte_list
+        payload = self.payload.build().data
 
         self.intArr = [
             self.dest,
@@ -47,9 +47,9 @@ class Message:
         self.intArr.append(self.checksum)
 
         for i in self.intArr:
-            self.byte_list.extend(self.to_hex(i))
+            self.data.extend(self.to_hex(i))
 
-        self.byte_list = list(map(self.to_hex, self.intArr))
+        self.data = list(map(self.to_hex, self.intArr))
 
         return self
 
@@ -65,4 +65,4 @@ class Message:
 
     # bytestring representation of the message
     def __str__(self):
-        return " ".join(self.build().byte_list)
+        return " ".join(self.build().data)

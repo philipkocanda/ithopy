@@ -4,15 +4,15 @@ from ithopy.payloads import BasePayload
 class StatusFormatPayload(BasePayload):
     def __init__(self) -> None:
         # Create an empty data buffer with room for 19 bytes:
-        self.byte_list = [0x0] * 19
+        self.data = [0x0] * 19
         self.data_type = 0  # not sure what this is, but it needs to be zero
 
         pass
 
-    def parse(self, byte_list, payload_type):
-        self.data_type = byte_list[16]
+    def parse(self, data, payload_type):
+        self.data_type = data[16]
         # can be used to look up the correct payload_type, right?
-        self.setting_id = byte_list[17]
+        self.setting_id = data[17]
         self.payload_type = payload_type
 
         _num_bytes = self.payload_type['bytes']
@@ -20,9 +20,9 @@ class StatusFormatPayload(BasePayload):
         _resolution = self.payload_type['resolution']
 
         value = (
-            byte_list[0] << 24) | (
-            byte_list[1] << 16) | (
-            byte_list[2] << 8) | byte_list[3]
+            data[0] << 24) | (
+            data[1] << 16) | (
+            data[2] << 8) | data[3]
 
         self.payload_value = value
 
@@ -57,28 +57,24 @@ class StatusFormatPayload(BasePayload):
         _bitmask = self.payload_type['bitmask']
         resolution = self.payload_type['resolution']
 
-        self.byte_list[16] = self.data_type
-        self.byte_list[17] = self.setting_id  # "index" column in the CSV
+        self.data[16] = self.data_type
+        self.data[17] = self.setting_id  # "index" column in the CSV
 
         value = self.payload_value * resolution
 
         if (num_bytes > 0):
-            self.byte_list[3] = value & 0xFF
+            self.data[3] = value & 0xFF
 
         if (num_bytes > 1):
-            self.byte_list[2] = (value >> 8) & 0xFF
+            self.data[2] = (value >> 8) & 0xFF
 
         if (num_bytes > 2):
-            self.byte_list[1] = (value >> 16) & 0xFF
-            self.byte_list[0] = (value >> 24) & 0xFF
+            self.data[1] = (value >> 16) & 0xFF
+            self.data[0] = (value >> 24) & 0xFF
 
         return self
 
-    def inspect(self):
+    def __dict__(self):
         return {
             # TODO
         }
-
-    # bytestring representation of the payload
-    def __str__(self):
-        return " ".join(self.build().byte_list)

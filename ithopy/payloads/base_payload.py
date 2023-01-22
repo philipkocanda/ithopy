@@ -41,19 +41,22 @@ class BasePayload:
     }
 
     def __init__(self) -> None:
-        self.byte_list = [0x0] * 19
+        self.data = [0x0] * 19
 
         pass
 
-    def parse(self, byte_list, payload_type):
+    def parse(self, data, payload_type):
         raise IthoPyException('Not implemented')
 
     def build(self):
         raise IthoPyException('Not implemented')
 
     def inspect(self):
-        raise IthoPyException('Not implemented')
+        self.__dict__()
 
-    # bytestring representation of the payload
     def __str__(self):
-        return " ".join(self.build().byte_list)
+        'Bytestring representation of the payload'
+        return " ".join(self.build().data)
+
+    def __repr__(self):
+        return str(self.inspect())

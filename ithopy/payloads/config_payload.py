@@ -7,7 +7,7 @@ class ConfigPayload(BasePayload):
 
     def __init__(self) -> None:
         # Create an empty data buffer with room for 19 bytes:
-        self.byte_list = [0x0] * self.PAYLOAD_SIZE
+        self.data = [0x0] * self.PAYLOAD_SIZE
         self.data_type = 0  # not sure what this is, but it needs to be zero
 
         pass
@@ -40,25 +40,22 @@ class ConfigPayload(BasePayload):
         _bitmask = self.payload_type['bitmask']
         resolution = self.payload_type['resolution']
 
-        self.byte_list[16] = self.data_type
-        self.byte_list[17] = self.setting_id  # "index" column in the CSV
+        self.data[16] = self.data_type
+        self.data[17] = self.setting_id  # "index" column in the CSV
 
         value = self.payload_value * resolution
 
         if (num_bytes > 0):
-            self.byte_list[3] = value & 0xFF
+            self.data[3] = value & 0xFF
 
         if (num_bytes > 1):
-            self.byte_list[2] = (value >> 8) & 0xFF
+            self.data[2] = (value >> 8) & 0xFF
 
         if (num_bytes > 2):
-            self.byte_list[1] = (value >> 16) & 0xFF
-            self.byte_list[0] = (value >> 24) & 0xFF
+            self.data[1] = (value >> 16) & 0xFF
+            self.data[0] = (value >> 24) & 0xFF
 
         return self
-
-    def inspect(self):
-        self.__dict__()
 
     def __dict__(self):
         return {
@@ -67,7 +64,3 @@ class ConfigPayload(BasePayload):
             "data_type": self.data_type,
             "type": self.payload_type,
         }
-
-    def __str__(self):
-        'Bytestring representation of the payload'
-        return " ".join(self.build().byte_list)

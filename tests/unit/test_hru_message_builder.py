@@ -77,7 +77,7 @@ class TestHruMessageBuilder(unittest.TestCase):
 
     def test_internal_methods(self):
         self.assertEqual(
-            self.hru.set_exhaust_fan_rpm(1200).build().byte_list,
+            self.hru.set_exhaust_fan_rpm(1200).build().data,
             ['82', '80', 'A4', '10', '06', '13', '00', '00', '04', 'B0', '00',
              '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00',
              '00', '2E', '00', '4F'])
