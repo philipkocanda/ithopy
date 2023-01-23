@@ -12,15 +12,16 @@ class ConfigPayload(BasePayload):
 
         pass
 
-    def parse(self, data, payload_type):
+    def parse(self, data):
         if len(data) != self.PAYLOAD_SIZE:
             raise IthoPyException(
                 f"Failed parsing config message payload: expected length to be {self.PAYLOAD_SIZE} bytes, actual length: {len(data)} bytes")
 
         self.data_type = data[16]
-        # can be used to look up the correct payload_type, right?
+
+        # TODO: Look up matching payload_type from setting_id:
         self.setting_id = data[17]
-        self.payload_type = payload_type
+        self.payload_type = BasePayload.DATA_TYPES['4_bytes']
 
         _num_bytes = self.payload_type['bytes']
         _bitmask = self.payload_type['bitmask']

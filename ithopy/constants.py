@@ -1,4 +1,4 @@
-from ithopy.payloads import *
+from ithopy.payloads import UnknownPayload, ConfigPayload, StatusFormatPayload, DeviceStatusPayload
 
 
 class Constants:
@@ -8,17 +8,18 @@ class Constants:
             'payload_class': UnknownPayload,
         },
         9232: {
-            # seems to be identical to [0x24, 0x10] (aka "2410")
+            # A410
+            # 2410 (looks to be same as A410, but may have compatibility issues)
             'name': 'config',
             'payload_class': ConfigPayload,
         },
         9216: {
-            # [0xA4, 0x00]
+            # A400
             'name': 'status_format',
             'payload_class': StatusFormatPayload,
         },
         9217: {
-            # [0xA4, 0x01]
+            # A401
             'name': 'device_status',
             'payload_class': DeviceStatusPayload,
         },
@@ -29,7 +30,14 @@ class Constants:
         16432: {
             'name': 'raw_data_response',
             'payload_class': UnknownPayload,
-        }
+        },
+        # The following msg classes are incorrectly parsed
+        # (hex->int conversion only goes one way):
+        #
+        # B1D9 - Used by itho-wifi, purpose unclear
+        # 31D9 - Used by itho-wifi, "Fan system status" <<- used to control fan speed? (either or both of these)
+        # 31DA - Used by itho-wifi, "Ventilation status" <<- used to control fan speed? (either or both of these)
+        # 2401 - Used by itho-wifi, "System status"
     }
 
     MSG_TYPES = {

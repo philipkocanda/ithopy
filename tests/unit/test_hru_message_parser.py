@@ -1,5 +1,6 @@
 import unittest
 import ipdb
+import json
 from ithopy.devices import HruMessageParser
 from ithopy.exceptions import *
 
@@ -9,26 +10,58 @@ class TestHruMessageParser(unittest.TestCase):
         self.parser = HruMessageParser()
 
     def test_parsing_status_format_message(self):
+        self.maxDiff = None
         # Query device status format:
         self.parser.parse(
             [0x80, 0x82, 0xA4, 0x00, 0x01, 0x16, 0x91, 0x11, 0x10, 0x90, 0x10,
              0x90, 0x92, 0x92, 0x00, 0x92, 0x92, 0x00, 0x00, 0x91, 0x00, 0x10,
              0x10, 0x00, 0x90, 0x00, 0x00, 0x10, 0xC8])
-        print(self.parser.message.inspect())
 
-        # A4 00 01 followed by number of data elements, followed by element formats (1 byte per element).
+        # ipdb.set_trace()
 
-        # Data format (1 byte):
-
-        # | Bit  | Description                        |
-        # | ---- | ---------------------------------- |
-        # | 7    | signed (1) / unsigned (0)          |
-        # | 6..4 | size in bytes (2^n): 0=1, 1=2, 2=4 |
-        # | 3..0 | decimal digits (divider 10^n)      |
-
-        # So for example `0x91` would mean "signed, 2 bytes, 0.1 values".
+        # autopep8: off
+        self.assertEqual((self.parser.message.inspect()),
+        ({
+          'dest': 128,
+          'src': 130,
+          'msg_class': 'status_format',
+          'msg_type': 'report_response',
+          'payload': {'data_formats': [
+            {'idx': 0, 'divider': 10, 'bytes': 2, 'signed': True, 'offset': 0, 'label': 'Requested fanspeed (%)'},
+            {'idx': 1, 'divider': 10, 'bytes': 2, 'signed': False, 'offset': 2, 'label': 'Balance (%)'},
+            {'idx': 2, 'divider': 1, 'bytes': 2, 'signed': False, 'offset': 4, 'label': 'supply fan (rpm)'},
+            {'idx': 3, 'divider': 1, 'bytes': 2, 'signed': True, 'offset': 6, 'label': 'supply fan actual (rpm)'},
+            {'idx': 4, 'divider': 1, 'bytes': 2, 'signed': False, 'offset': 8, 'label': 'exhaust fan (rpm)'},
+            {'idx': 5, 'divider': 1, 'bytes': 2, 'signed': True, 'offset': 10, 'label': 'exhaust fan actual (rpm)'},
+            {'idx': 6, 'divider': 100, 'bytes': 2, 'signed': True, 'offset': 12, 'label': 'supply temp (°C)'},
+            {'idx': 7, 'divider': 100, 'bytes': 2, 'signed': True, 'offset': 14, 'label': 'exhaust temp (°C)'},
+            {'idx': 8, 'divider': 1, 'bytes': 1, 'signed': False, 'offset': 16, 'label': 'Status'},
+            {'idx': 9, 'divider': 100, 'bytes': 2, 'signed': True, 'offset': 17, 'label': 'Room temp (°C)'},
+            {'idx': 10, 'divider': 100, 'bytes': 2, 'signed': True, 'offset': 19, 'label': 'Outdoor temp (°C)'},
+            {'idx': 11, 'divider': 1, 'bytes': 1, 'signed': False, 'offset': 21, 'label': 'Valve position (pulse)'},
+            {'idx': 12, 'divider': 1, 'bytes': 1, 'signed': False, 'offset': 22, 'label': 'Bypass position (pulse)'},
+            {'idx': 13, 'divider': 10, 'bytes': 2, 'signed': True, 'offset': 23, 'label': 'Summercounter'},
+            {'idx': 14, 'divider': 1, 'bytes': 1, 'signed': False, 'offset': 25, 'label': 'Summerday'},
+            {'idx': 15, 'divider': 1, 'bytes': 2, 'signed': False, 'offset': 26, 'label': 'Frost timer (sec)'},
+            {'idx': 16, 'divider': 1, 'bytes': 2, 'signed': False, 'offset': 28, 'label': 'Boiler timer (min)'},
+            {'idx': 17, 'divider': 1, 'bytes': 1, 'signed': False, 'offset': 30, 'label': 'Frost block'},
+            {'idx': 18, 'divider': 1, 'bytes': 2, 'signed': True, 'offset': 31, 'label': 'Current position'},
+            {'idx': 19, 'divider': 1, 'bytes': 1, 'signed': False, 'offset': 33, 'label': 'VKKswitch'},
+            {'idx': 20, 'divider': 1, 'bytes': 1, 'signed': False, 'offset': 34, 'label': 'GHEswitch'},
+            {'idx': 21, 'divider': 1, 'bytes': 2, 'signed': False, 'offset': 35, 'label': 'Filter counter'}]},
+          })
+        )
+        # autopep8: on
 
     def test_parsing_device_status_message(self):
+        # Parse and load status format:
+        self.parser.parse(
+            [0x80, 0x82, 0xA4, 0x00, 0x01, 0x16, 0x91, 0x11, 0x10, 0x90, 0x10,
+             0x90, 0x92, 0x92, 0x00, 0x92, 0x92, 0x00, 0x00, 0x91, 0x00, 0x10,
+             0x10, 0x00, 0x90, 0x00, 0x00, 0x10, 0xC8])
+
+        print(self.parser.message.inspect())
+
         # Query device status:
         self.parser.parse(
             [0x82, 0x80, 0xA4, 0x01, 0x04, 0x00, 0x55]

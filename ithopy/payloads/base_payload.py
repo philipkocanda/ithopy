@@ -45,7 +45,7 @@ class BasePayload:
 
         pass
 
-    def parse(self, data, payload_type):
+    def parse(self, data):
         raise IthoPyException('Not implemented')
 
     def build(self):
@@ -55,8 +55,7 @@ class BasePayload:
         return self.__dict__()
 
     def __str__(self):
-        'Bytestring representation of the payload'
+        """
+        Hexacedimal bytestring representation of the message payload: '82 80 A4 10'
+        """
         return " ".join(self.build().data)
-
-    def __repr__(self):
-        return str(self.inspect())

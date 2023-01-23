@@ -1,6 +1,6 @@
 from ithopy.message import Message
-from ithopy.payloads import *
 from ithopy.exceptions import IthoPyChecksumError
+from ithopy.constants import Constants
 
 # Message structure
 
@@ -25,15 +25,19 @@ class BaseMessageParser:
 
         self.dest = data[0]
         self.src = data[1]
-        self.msg_class = data[2:4]  # needs conversion
+        self.msg_class = data[2:4]
+        self.msg_class_int = self.decode_msg_class(self.msg_class)
         self.type = data[4]
         self.payload_length = data[5]
-        self.raw_payload = data[6:len(data) - 1]
+        self.payload_data = data[6:len(data) - 1]
         self.checksum = data[len(data) - 1]
 
-        self.payload = ConfigPayload()
+        payload_class = Constants.MSG_CLASSES.get(
+            self.msg_class_int, Constants.MSG_CLASSES[0])['payload_class']
+
+        self.payload = payload_class()
         # move to Payload class implementation
-        self.payload.parse(self.raw_payload, BasePayload.DATA_TYPES['4_bytes'])
+        self.payload.parse(self.payload_data)  # move to constants?
 
         self.message.dest = self.dest
         self.message.src = self.src

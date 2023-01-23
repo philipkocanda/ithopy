@@ -1,4 +1,5 @@
 from ithopy.constants import Constants
+import ipdb
 
 
 class Message:
@@ -48,23 +49,24 @@ class Message:
 
         return self
 
-    # this could be in a separate "serializer" class
     def inspect(self):
         return {
-            "dest": self.src,
+            "dest": self.dest,
             "src": self.src,
             "msg_class": Constants.MSG_CLASSES.get(self.msg_class, 0)['name'],
             "msg_type": Constants.MSG_TYPES.get(self.type, f"<unknown: {self.type}>"),
-            "payload": self.payload.inspect(),
+            "payload": self.payload.to_dict(),
         }
 
     def bytes_list(self):
-        "Returns list of bytes as strings: ['82', '80', 'A4', '10']"
+        "Returns list of hex byte strings: ['82', '80', 'A4', '10']"
         self.build()
         return list(map(self.to_hex, self.data))
 
     def __str__(self):
-        "Returns bytestring: '82 80 A4 10'"
+        """
+        Returns hexadecimal bytestring representation of the entire message: '82 80 A4 10'
+        """
         self.build()
 
         data = list(map(self.to_hex, self.data))

@@ -8,7 +8,7 @@ class UnknownPayload(BasePayload):
 
         pass
 
-    def parse(self, data, payload_type):
+    def parse(self, data):
         self.payload_value = data
 
         return self.payload_value
