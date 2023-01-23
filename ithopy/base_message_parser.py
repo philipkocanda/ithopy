@@ -32,6 +32,9 @@ class BaseMessageParser:
         self.payload_data = data[6:len(data) - 1]
         self.checksum = data[len(data) - 1]
 
+        if not skip_checksum:
+            self.validate_checksum(data)
+
         payload_class = Constants.MSG_CLASSES.get(
             self.msg_class_int, Constants.MSG_CLASSES[0])['payload_class']
 
@@ -46,8 +49,7 @@ class BaseMessageParser:
         self.message.type = self.type
         self.message.payload = self.payload
 
-        if not skip_checksum:
-            self.validate_checksum(data)
+        return self.message
 
     def decode_msg_class(self, msg_class):
         byte0, byte1 = msg_class
