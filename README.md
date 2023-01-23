@@ -6,7 +6,7 @@ NOTE: This library can't communicate directly with your device. For that you'll 
 
 ## Supported devices
 
-- Itho HRU ECO BAL LE (2017 model)
+- Itho HRU ECO BAL LE (firmware: v12, hardware: v3)
 
 ## TODO
 
