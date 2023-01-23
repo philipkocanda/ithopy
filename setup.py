@@ -10,7 +10,7 @@ with open('README.md') as f:
 setup(
     name='ithopy',
     packages=find_packages(exclude=('tests', 'tests.*')),
-    version='0.1.1',
+    version='0.2.1',
     license='MIT',
     description='IthoPy is a library to communicate with I2C Itho devices',
     long_description=readme,
