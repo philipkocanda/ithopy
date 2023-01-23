@@ -11,9 +11,7 @@ class DeviceStatusPayload(BasePayload):
         return self.data
 
     def build(self):
-        raise Exception("Unsupported operation")
+        return self
 
     def __dict__(self):
-        return {
-            # TODO
-        }
+        return self.data

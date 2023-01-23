@@ -20,7 +20,7 @@ class BaseMessageParser:
     def to_hex(self, n):
         return '{0:02X}'.format(n)
 
-    def parse(self, data):
+    def parse(self, data, skip_checksum=False):
         self.message = Message()
 
         self.dest = data[0]
@@ -39,21 +39,23 @@ class BaseMessageParser:
         # move to Payload class implementation
         self.payload.parse(self.payload_data)  # move to constants?
 
+        self.message.data = data
         self.message.dest = self.dest
         self.message.src = self.src
         self.message.msg_class = self.decode_msg_class(self.msg_class)
         self.message.type = self.type
         self.message.payload = self.payload
-        self.message.build()
 
-        self.validate_checksum()
+        if not skip_checksum:
+            self.validate_checksum(data)
 
     def decode_msg_class(self, msg_class):
         byte0, byte1 = msg_class
 
         return (byte0 - 128) * 256 + byte1
 
-    def validate_checksum(self):
-        if self.message.checksum != self.checksum:
+    def validate_checksum(self, data):
+        checksum = self.message.calc_checksum(data[:-1])
+        if checksum != self.checksum:
             raise IthoPyChecksumError(
-                f"Checksum mismatch! Received: `{self.to_hex(self.checksum)}`, calculated: `{self.to_hex(self.message.checksum)}`")
+                f"Checksum mismatch! Received: `{self.to_hex(self.checksum)}`, calculated: `{self.to_hex(checksum)}`")

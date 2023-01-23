@@ -54,6 +54,9 @@ class BasePayload:
     def inspect(self):
         return self.__dict__()
 
+    def to_dict(self):
+      return self.__dict__()
+
     def __str__(self):
         """
         Hexacedimal bytestring representation of the message payload: '82 80 A4 10'

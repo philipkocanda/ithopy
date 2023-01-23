@@ -82,7 +82,7 @@ class DataFormat:
     @staticmethod
     def parse_data(data):
         "Parses given data using previously received formats"
-        values = []
+        results = {}
 
         if len(DataFormat.formats) == 0:
             raise Exception(
@@ -105,7 +105,17 @@ class DataFormat:
                 if value & (1 << (data_format.bits() - 1)):
                     value -= 1 << data_format.bits()
 
-            values.append(value / data_format.divider)
+            value = value / data_format.divider
+
+            results[data_format.idx] = {
+                'label': data_format.label(),
+                'value': value,
+            }
+
+        return results
+
+    def label(self):
+        return DataFormat.labels[self.idx]
 
     def bits(self):
         return self.bytes * 8
@@ -117,14 +127,11 @@ class DataFormat:
             'bytes': self.bytes,
             'signed': self.signed,
             'offset': self.offset,
-            'label': DataFormat.labels[self.idx],
+            'label': self.label(),
         }
 
     def to_dict(self):
-      return self.__dict__()
+        return self.__dict__()
 
     def __str__(self):
         return str(self.__dict__())
-
-    # def __repr__(self):
-    #     return str(self.__dict__())

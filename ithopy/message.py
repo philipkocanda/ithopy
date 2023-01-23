@@ -1,5 +1,4 @@
 from ithopy.constants import Constants
-import ipdb
 
 
 class Message:
@@ -32,6 +31,9 @@ class Message:
     # Note: All bytes are stored as ints as long as possible before being returned
     # err, we don't need to do this! ^
     def build(self):
+        if self.data:
+            return self
+
         payload = self.payload.build().data
 
         self.data = [
@@ -43,9 +45,7 @@ class Message:
             *payload,
         ]
 
-        self.checksum = self.calc_checksum(self.data)
-
-        self.data.append(self.checksum)
+        self.data.append(self.calc_checksum(self.data))
 
         return self
 
